@@ -52,4 +52,9 @@ class User extends Authenticatable
             'is_admin' => 'boolean',
         ];
     }
+
+    public function workouts()
+    {
+        return $this->belongsToMany(\App\Models\Workout::class);
+    }
 }
