@@ -1,23 +1,29 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Profile') }}
+        </h2>
+    </x-slot>
 
-@section('content')
-    <h2>Profiel aanpassen</h2>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('profile.partials.update-profile-information-form')
+                </div>
+            </div>
 
-    <x-form-errors />
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('profile.partials.update-password-form')
+                </div>
+            </div>
 
-    <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-
-        <input type="text" name="username" value="{{ old('username', auth()->user()->username) }}" required>
-
-        <input type="date" name="birthday" value="{{ old('birthday', auth()->user()->birthday?->format('Y-m-d')) }}">
-
-        <textarea name="about">{{ old('about', auth()->user()->about) }}</textarea>
-
-        <input type="file" name="avatar" accept="image/*">
-
-        <button>Opslaan</button>
-    </form>
-@endsection
-
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div class="max-w-xl">
+                    @include('profile.partials.delete-user-form')
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
