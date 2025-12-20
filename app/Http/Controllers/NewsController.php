@@ -9,11 +9,11 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = News::orderByDesc('published_at')->get();
+        $news = \App\Models\News::orderByDesc('published_at')->get();
         return view('news.index', compact('news'));
     }
 
-    public function show(News $news)
+    public function show(\App\Models\News $news)
     {
         return view('news.show', compact('news'));
     }
@@ -38,17 +38,17 @@ class NewsController extends Controller
 
         $data['created_by'] = auth()->id();
 
-        News::create($data);
+        \App\Models\News::create($data);
 
         return redirect()->route('news.index');
     }
 
-    public function edit(News $news)
+    public function edit(\App\Models\News $news)
     {
         return view('admin.news.edit', compact('news'));
     }
 
-    public function update(Request $request, News $news)
+    public function update(Request $request, \App\Models\News $news)
     {
         $data = $request->validate([
             'title' => ['required','string','max:255'],
@@ -66,9 +66,10 @@ class NewsController extends Controller
         return redirect()->route('news.index');
     }
 
-    public function destroy(News $news)
+    public function destroy(\App\Models\News $news)
     {
         $news->delete();
         return redirect()->route('news.index');
     }
+
 }
