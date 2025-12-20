@@ -8,7 +8,7 @@ Route::get('/users/{user}', [ProfileController::class, 'show'])
 Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])
         ->name('profile.edit');
-    
+
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/admin', function () {
             return 'Admin panel';
