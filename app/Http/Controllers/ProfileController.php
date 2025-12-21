@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Services\ProfileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -24,25 +26,23 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(Request $request)
+    public function update(ProfileUpdateRequest $request, ProfileService $service)
     {
         $user = $request->user();
 
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['nullable', 'string', 'max:255'],
-            'birthday' => ['nullable', 'date'],
-            'about' => ['nullable', 'string', 'max:1000'],
-            'avatar' => ['nullable', 'image', 'max:2048'],
-        ]);
+        $data = $request->validated();
 
-        // Profielfoto upload
+        // Handle avatar upload through service
         if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('avatars', 'public');
-            $data['avatar_path'] = $path;
+            $data['avatar_path'] = $service->storeAvatar($request->file('avatar'));
         }
 
-        $user->update($data);
+        // If the email changed, reset verification timestamp
+        if (isset($data['email']) && $data['email'] !== $user->email) {
+            $data['email_verified_at'] = null;
+        }
+
+        $service->update($user, $data);
 
         return redirect()
             ->route('profile.edit')
