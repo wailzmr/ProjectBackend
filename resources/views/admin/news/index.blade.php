@@ -1,25 +1,51 @@
 <x-app-layout>
     <div class="max-w-4xl mx-auto py-8">
-        <h1 class="text-2xl font-bold mb-6">News</h1>
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold">News</h1>
+            <a href="{{ route('admin.news.create') }}" class="px-4 py-2 bg-black text-white rounded">Create news</a>
+        </div>
+
+        @if(session('success'))
+            <div class="mb-4 p-3 bg-green-50 border border-green-200 text-green-700 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
 
         @foreach($news as $item)
             <div class="mb-6 border-b pb-4">
-                <h2 class="text-xl font-semibold">
-                    <a href="{{ route('news.show', $item) }}">
-                        {{ $item->title }}
-                    </a>
-                </h2>
+                <div class="flex flex-col sm:flex-row gap-4 items-start">
+                    @if($item->image_path)
+                        <div class="w-full sm:w-56 md:w-64 lg:w-72 h-40 md:h-44 lg:h-48 flex-shrink-0 overflow-hidden rounded bg-gray-100">
+                            <img
+                                src="{{ asset('storage/' . $item->image_path) }}"
+                                alt="{{ $item->title }}"
+                                class="w-full h-full object-cover"
+                            >
+                        </div>
+                    @endif
 
-                @if($item->image_path)
-                    <img
-                        src="{{ asset('storage/' . $item->image_path) }}"
-                        class="w-full max-w-md my-2"
-                    >
-                @endif
+                    <div class="flex-1">
+                        <h2 class="text-xl font-semibold">
+                            <a href="{{ route('news.show', $item) }}">
+                                {{ $item->title }}
+                            </a>
+                        </h2>
 
-                <p class="text-sm text-gray-600">
-                    {{ optional($item->published_at)->format('d/m/Y') }}
-                </p>
+                        <p class="text-sm text-gray-600 mt-2">
+                            {{ optional($item->published_at)->format('d/m/Y') }}
+                        </p>
+
+                        <div class="mt-3 flex gap-2">
+                            <a href="{{ route('admin.news.edit', $item) }}" class="px-3 py-1 border rounded">Edit</a>
+
+                            <form action="{{ route('admin.news.destroy', $item) }}" method="POST" onsubmit="return confirm('Delete this news item?');" style="display:inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="px-3 py-1 bg-red-600 text-white rounded">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endforeach
     </div>

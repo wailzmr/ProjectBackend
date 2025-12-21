@@ -2,79 +2,82 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreNewsRequest;
+use App\Http\Requests\UpdateNewsRequest;
 use App\Models\News;
+use App\Services\NewsService;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of news articles.
+     */
+    public function index(Request $request, NewsService $service)
     {
-        $news = News::latest()->get();
+        $news = $service->listAll();
 
-        if (request()->routeIs('admin.*')) {
+        if ($request->routeIs('admin.*')) {
             return view('admin.news.index', compact('news'));
         }
 
         return view('news.index', compact('news'));
     }
 
-    public function show(\App\Models\News $news)
+    /**
+     * Display a single news article.
+     */
+    public function show(News $news)
     {
         return view('news.show', compact('news'));
     }
 
+    /**
+     * Show the form for creating a news article (admin).
+     */
     public function create()
     {
         return view('admin.news.create');
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created news article.
+     */
+    public function store(StoreNewsRequest $request, NewsService $service)
     {
-        $data = $request->validate([
-            'title' => ['required','string','max:255'],
-            'content' => ['required'],
-            'published_at' => ['nullable','date'],
-            'image' => ['nullable','image','max:2048'],
-        ]);
+        $service->create($request->validated());
 
-        if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('news', 'public');
-        }
-
-        $data['created_by'] = auth()->id();
-
-        \App\Models\News::create($data);
-
-        return redirect()->route('news.index');
+        return redirect()->route('admin.news.index')
+            ->with('success', 'News created successfully.');
     }
 
-    public function edit(\App\Models\News $news)
+    /**
+     * Show the form for editing the specified news article (admin).
+     */
+    public function edit(News $news)
     {
         return view('admin.news.edit', compact('news'));
     }
 
-    public function update(Request $request, \App\Models\News $news)
+    /**
+     * Update the specified news article.
+     */
+    public function update(UpdateNewsRequest $request, News $news, NewsService $service)
     {
-        $data = $request->validate([
-            'title' => ['required','string','max:255'],
-            'content' => ['required'],
-            'published_at' => ['nullable','date'],
-            'image' => ['nullable','image','max:2048'],
-        ]);
+        $service->update($news, $request->validated());
 
-        if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('news', 'public');
-        }
-
-        $news->update($data);
-
-        return redirect()->route('news.index');
+        return redirect()->route('admin.news.index')
+            ->with('success', 'News updated successfully.');
     }
 
-    public function destroy(\App\Models\News $news)
+    /**
+     * Remove the specified news article.
+     */
+    public function destroy(News $news, NewsService $service)
     {
-        $news->delete();
-        return redirect()->route('news.index');
-    }
+        $service->delete($news);
 
+        return redirect()->route('admin.news.index')
+            ->with('success', 'News deleted successfully.');
+    }
 }
