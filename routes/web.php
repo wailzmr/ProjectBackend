@@ -19,9 +19,6 @@ Route::get('/dashboard', [HomeController::class, 'dashboard'])
  * Public pages
  */
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
-Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-
 /**
  * Admin news management
  */
@@ -67,25 +64,21 @@ Route::middleware(['auth', 'admin'])
     ->name('admin.')
     ->group(function () {
         Route::resource('news', NewsController::class)->except(['show']);
+        Route::get('/faq', [FaqController::class, 'adminIndex'])->name('faq.admin');
+        Route::resource('faq-categories', \App\Http\Controllers\Admin\FaqCategoryController::class);
+        Route::resource('faqs', \App\Http\Controllers\Admin\FaqController::class);
+
+        Route::resource('workouts', \App\Http\Controllers\Admin\WorkoutController::class);
+        Route::resource('exercises', \App\Http\Controllers\Admin\ExerciseController::class);
+
+        Route::get('/contacts', [ContactController::class, 'adminIndex'])->name('contacts.index');
+        Route::get('/contacts/{contactMessage}', [ContactController::class, 'adminShow'])->name('contacts.show');
+
+        Route::get('/users', [UserManagementController::class, 'index'])->name('users.index');
+        Route::post('/users/{user}/toggle-admin', [UserManagementController::class, 'toggleAdmin'])->name('users.toggleAdmin');
+        Route::get('/users/create', [UserManagementController::class, 'create'])->name('users.create');
+        Route::post('/users', [UserManagementController::class, 'store'])->name('users.store');
     });
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-
-
-    Route::get('/faq', [FaqController::class, 'adminIndex'])->name('faq.admin');
-    Route::resource('faq-categories', \App\Http\Controllers\Admin\FaqCategoryController::class);
-    Route::resource('faqs', \App\Http\Controllers\Admin\FaqController::class);
-
-    Route::resource('workouts', \App\Http\Controllers\Admin\WorkoutController::class);
-    Route::resource('exercises', \App\Http\Controllers\Admin\ExerciseController::class);
-
-    Route::get('/contacts', [ContactController::class, 'adminIndex'])->name('contacts.index');
-    Route::get('/contacts/{contactMessage}', [ContactController::class, 'adminShow'])->name('contacts.show');
-
-    Route::get('/users', [UserManagementController::class, 'index'])->name('users.index');
-    Route::post('/users/{user}/toggle-admin', [UserManagementController::class, 'toggleAdmin'])->name('users.toggleAdmin');
-    Route::get('/users/create', [UserManagementController::class, 'create'])->name('users.create');
-    Route::post('/users', [UserManagementController::class, 'store'])->name('users.store');
-});
 
 
 
