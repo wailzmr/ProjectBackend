@@ -18,10 +18,16 @@ Route::get('/dashboard', [HomeController::class, 'dashboard'])
 /**
  * Public pages
  */
-Route::resource('news', NewsController::class)->only(['index', 'show']);
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+/**
+ * Admin news management
+ */
+
+
+
 
 /**
  * Authenticated user profile (Breeze)
@@ -43,9 +49,27 @@ Route::middleware('auth')->group(function () {
 
 /**
  * Admin panel
+ *
+
  */
+
+
+/**
+ * Public news (read-only)
+ */
+Route::resource('news', NewsController::class)->only(['index', 'show']);
+
+/**
+ * Admin news (CRUD)
+ */
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::resource('news', NewsController::class)->except(['show']);
+    });
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('news', NewsController::class)->except(['index','show']);
+
 
     Route::get('/faq', [FaqController::class, 'adminIndex'])->name('faq.admin');
     Route::resource('faq-categories', \App\Http\Controllers\Admin\FaqCategoryController::class);
@@ -63,11 +87,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/users', [UserManagementController::class, 'store'])->name('users.store');
 });
 
-Route::resource('news', NewsController::class)->only(['index','show']);
 
-Route::middleware(['auth','admin'])->group(function () {
-    Route::resource('news', NewsController::class)->except(['index','show']);
-});
+
 
 
 

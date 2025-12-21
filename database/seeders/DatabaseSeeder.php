@@ -33,5 +33,10 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('Wail1234'),
             'is_admin' => false,
         ]);
+
+
+        $this->call([
+            NewsSeeder::class,
+        ]);
     }
 }

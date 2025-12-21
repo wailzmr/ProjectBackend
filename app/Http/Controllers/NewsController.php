@@ -9,7 +9,12 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $news = \App\Models\News::orderByDesc('published_at')->get();
+        $news = News::latest()->get();
+
+        if (request()->routeIs('admin.*')) {
+            return view('admin.news.index', compact('news'));
+        }
+
         return view('news.index', compact('news'));
     }
 
