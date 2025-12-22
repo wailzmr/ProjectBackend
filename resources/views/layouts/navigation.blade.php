@@ -24,6 +24,31 @@
                         {{ __('Workouts') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.index')">
+                        {{ __('FAQ') }}
+                    </x-nav-link>
+
+                    @auth
+                        @if(auth()->user()->is_admin)
+                            <x-nav-link :href="route('admin.contacts.index')"
+                                        :active="request()->routeIs('admin.contacts.*')">
+                                {{ __('Contacts') }}
+                            </x-nav-link>
+                        @else
+                            <x-nav-link :href="route('contact.create')"
+                                        :active="request()->routeIs('contact.*')">
+                                {{ __('Contact') }}
+                            </x-nav-link>
+                        @endif
+                    @else
+                        <x-nav-link :href="route('contact.create')"
+                                    :active="request()->routeIs('contact.*')">
+                            {{ __('Contact') }}
+                        </x-nav-link>
+                    @endauth
+
+
+
                     {{-- Admin-only exercises link --}}
                     @if(Auth::check() && Auth::user()->is_admin)
                         <x-nav-link :href="route('admin.exercises.index')" :active="request()->routeIs('admin.exercises.*')">
