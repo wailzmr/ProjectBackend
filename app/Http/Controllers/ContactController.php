@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreContactRequest;
-use App\Services\ContactService;
+use App\Models\ContactMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
     /**
-     * Show the contact form.
+     * Public contact form
      */
     public function create()
     {
@@ -17,14 +17,44 @@ class ContactController extends Controller
     }
 
     /**
-     * Process the contact form submission.
+     * Store contact message (public)
      */
-    public function store(StoreContactRequest $request, ContactService $service)
+    public function store(Request $request)
     {
-        $service->handle($request->validated());
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
 
-        return redirect()
-            ->route('contact.create')
-            ->with('success', 'Je bericht is verzonden!');
+
+        ContactMessage::create($data);
+
+        // Mail is configured as log, so this is safe
+        Mail::raw($data['message'], function ($mail) use ($data) {
+            $mail->to('admin@ehb.be')
+                ->subject($data['subject']);
+
+        });
+
+        return back()->with('success', 'Message sent successfully.');
+    }
+
+    /**
+     * Admin: list all contact messages
+     */
+    public function adminIndex()
+    {
+        $messages = ContactMessage::latest()->get();
+        return view('admin.contacts.index', compact('messages'));
+    }
+
+    /**
+     * Admin: show one contact message
+     */
+    public function adminShow(ContactMessage $contactMessage)
+    {
+        return view('admin.contacts.show', compact('contactMessage'));
     }
 }
