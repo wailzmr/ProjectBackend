@@ -65,7 +65,6 @@ Route::middleware(['auth', 'admin'])
 
 
         Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
-        Route::get('/faq', [FaqController::class, 'adminIndex'])->name('faq.admin');
         Route::resource('faq-categories', \App\Http\Controllers\Admin\FaqCategoryController::class);
         Route::resource('faqs', \App\Http\Controllers\Admin\FaqController::class);
 

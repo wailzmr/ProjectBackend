@@ -18,6 +18,17 @@
                         <a href="{{ route('workouts.index') }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700">
                             View Workouts
                         </a>
+
+                        <a href="{{ route('faq.index') }}"
+                           class="inline-block px-4 py-2 bg-indigo-600 text-white rounded shadow hover:bg-indigo-700">
+                            View FAQ
+                        </a>
+
+                        <a href="{{ route('contact.create') }}"
+                           class="inline-block px-4 py-2 bg-green-600 text-white rounded shadow hover:bg-green-700">
+                            Contact Us
+                        </a>
+
                         {{-- If in future there is a public exercises page, add it here --}}
                     </div>
                 </div>
@@ -64,12 +75,26 @@
 
                         <div class="p-4 border rounded">
                             <h4 class="font-medium">FAQ & Contacts</h4>
-                            <p class="text-sm text-gray-600">Manage FAQ categories, FAQs and view contact messages.</p>
-                            <div class="mt-3 flex gap-2">
-                                <a href="{{ route('admin.faq.admin') }}" class="inline-block px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700">Manage FAQ</a>
-                                <a href="{{ route('admin.contacts.index') }}" class="inline-block px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700">Contacts</a>
+                            <p class="text-sm text-gray-600">Manage FAQs, FAQ categories and view contact messages.</p>
+
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <a href="{{ route('admin.faqs.index') }}"
+                                   class="inline-block px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+                                    Manage FAQs
+                                </a>
+
+                                <a href="{{ route('admin.faq-categories.index') }}"
+                                   class="inline-block px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700">
+                                    FAQ Categories
+                                </a>
+
+                                <a href="{{ route('admin.contacts.index') }}"
+                                   class="inline-block px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700">
+                                    Contacts
+                                </a>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
