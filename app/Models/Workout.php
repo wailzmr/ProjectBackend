@@ -4,13 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Exercise extends Model
+class Workout extends Model
 {
-    protected $fillable = ['name', 'notes'];
+    protected $fillable = ['title','description','difficulty','created_by'];
 
-    public function workouts()
+    public function author()
     {
-        return $this->belongsToMany(Workout::class)
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function exercises()
+    {
+        return $this->belongsToMany(Exercise::class)
             ->withPivot('sets', 'reps', 'seconds');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }
