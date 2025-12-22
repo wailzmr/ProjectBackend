@@ -37,6 +37,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             NewsSeeder::class,
+            FaqSeeder::class,
+            // UserSeeder (admin)
+            ExerciseSeeder::class,
+            WorkoutSeeder::class,
+            WorkoutExerciseSeeder::class,
         ]);
     }
 }
