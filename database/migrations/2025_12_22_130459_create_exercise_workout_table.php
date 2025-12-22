@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exercises', function (Blueprint $table) {
+        Schema::create('exercise_workout', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('exercise_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('workout_id')->constrained()->cascadeOnDelete();
             $table->unsignedSmallInteger('sets')->nullable();
             $table->unsignedSmallInteger('reps')->nullable();
             $table->unsignedSmallInteger('seconds')->nullable();
-            $table->text('notes')->nullable();
-            $table->timestamps();
+
+            $table->unique(['exercise_id', 'workout_id']);
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exercises');
+        Schema::dropIfExists('exercise_workout');
     }
 };
