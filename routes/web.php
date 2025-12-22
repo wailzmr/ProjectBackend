@@ -62,6 +62,8 @@ Route::middleware(['auth', 'admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
+
+
         Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
         Route::get('/faq', [FaqController::class, 'adminIndex'])->name('faq.admin');
         Route::resource('faq-categories', \App\Http\Controllers\Admin\FaqCategoryController::class);
@@ -69,6 +71,16 @@ Route::middleware(['auth', 'admin'])
 
         Route::resource('workouts', \App\Http\Controllers\Admin\WorkoutController::class);
         Route::resource('exercises', \App\Http\Controllers\Admin\ExerciseController::class);
+        Route::post(
+            'workouts/{workout}/exercises',
+            [\App\Http\Controllers\Admin\WorkoutController::class, 'attachExercise']
+        )->name('workouts.exercises.attach');
+
+        Route::delete(
+            'workouts/{workout}/exercises/{exercise}',
+            [\App\Http\Controllers\Admin\WorkoutController::class, 'detachExercise']
+        )->name('workouts.exercises.detach');
+
 
         Route::get('/contacts', [ContactController::class, 'adminIndex'])->name('contacts.index');
         Route::get('/contacts/{contactMessage}', [ContactController::class, 'adminShow'])->name('contacts.show');

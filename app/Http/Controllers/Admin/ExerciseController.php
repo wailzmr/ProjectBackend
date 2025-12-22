@@ -10,7 +10,7 @@ class ExerciseController extends Controller
 {
     public function index()
     {
-        $exercises = Exercise::all();
+        $exercises = Exercise::orderBy('name')->get();
         return view('admin.exercises.index', compact('exercises'));
     }
 
