@@ -57,4 +57,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(\App\Models\Workout::class);
     }
+
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
+
 }

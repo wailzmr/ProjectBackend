@@ -16,6 +16,7 @@ class NewsSeeder extends Seeder
     {
         News::create([
             'title' => 'Welcome to the fitness community',
+            "image_path" => 'public/storage/news/images.png',
             'content' => 'This is our first news item.',
             'published_at' => now(),
             'created_by' => 1,

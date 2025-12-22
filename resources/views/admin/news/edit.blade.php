@@ -2,7 +2,7 @@
     <div class="max-w-xl mx-auto py-8">
         <h1 class="text-xl font-bold mb-4">Edit news</h1>
 
-        <form method="POST" action="{{ route('news.update', $news) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.news.update', $news) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
