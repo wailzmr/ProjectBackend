@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Exercise extends Model
 {
-    protected $fillable = ['workout_id','name','sets','reps','seconds','notes'];
+    protected $fillable = ['name', 'notes'];
 
-    public function workout() { return $this->belongsTo(Workout::class); }
+    public function workouts()
+    {
+        return $this->belongsToMany(Workout::class)
+            ->withPivot('sets', 'reps', 'seconds');
+    }
 }

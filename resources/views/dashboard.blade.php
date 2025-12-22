@@ -8,34 +8,70 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
-            {{-- Gewone gebruiker --}}
-            @if(!auth()->user()->is_admin)
+            {{-- Regular user --}}
+            @if(Auth::check() && !Auth::user()->is_admin)
                 <div class="p-6 bg-white shadow rounded-lg">
                     <h3 class="text-lg font-semibold mb-2">Welcome</h3>
                     <p>You are logged in as a user.</p>
+
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <a href="{{ route('workouts.index') }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700">
+                            View Workouts
+                        </a>
+                        {{-- If in future there is a public exercises page, add it here --}}
+                    </div>
                 </div>
             @endif
 
             {{-- Admin dashboard --}}
-            @if(auth()->user()->is_admin)
+            @if(Auth::check() && Auth::user()->is_admin)
                 <div class="p-6 bg-white shadow rounded-lg">
                     <h3 class="text-lg font-semibold mb-4">Admin panel</h3>
 
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>
-                            <a href="{{ route('admin.news.create') }}" class="text-blue-600 underline">
-                                Create news
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.news.index') }}" class="text-blue-600 underline">
-                                Manage news
-                            </a>
-                        </li>
-                        {{-- later --}}
-                        {{-- <li>Manage FAQ</li> --}}
-                        {{-- <li>View contact messages</li> --}}
-                    </ul>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="p-4 border rounded">
+                            <h4 class="font-medium">News</h4>
+                            <p class="text-sm text-gray-600">Create and manage news posts.</p>
+                            <div class="mt-3 flex gap-2">
+                                <a href="{{ route('admin.news.create') }}" class="inline-block px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700">Create</a>
+                                <a href="{{ route('admin.news.index') }}" class="inline-block px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">Manage</a>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border rounded">
+                            <h4 class="font-medium">Workouts</h4>
+                            <p class="text-sm text-gray-600">Manage workout programs visible to users.</p>
+                            <div class="mt-3">
+                                <a href="{{ route('admin.workouts.index') }}" class="inline-block px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">Manage Workouts</a>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border rounded">
+                            <h4 class="font-medium">Exercises</h4>
+                            <p class="text-sm text-gray-600">Create and edit exercises used in workouts.</p>
+                            <div class="mt-3">
+                                <a href="{{ route('admin.exercises.index') }}" class="inline-block px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">Manage Exercises</a>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border rounded">
+                            <h4 class="font-medium">Users</h4>
+                            <p class="text-sm text-gray-600">View, create or manage users.</p>
+                            <div class="mt-3">
+                                <a href="{{ route('admin.users.index') }}" class="inline-block px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">Manage Users</a>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border rounded">
+                            <h4 class="font-medium">FAQ & Contacts</h4>
+                            <p class="text-sm text-gray-600">Manage FAQ categories, FAQs and view contact messages.</p>
+                            <div class="mt-3 flex gap-2">
+                                <a href="{{ route('admin.faq.admin') }}" class="inline-block px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700">Manage FAQ</a>
+                                <a href="{{ route('admin.contacts.index') }}" class="inline-block px-3 py-1 bg-gray-600 text-white rounded hover:bg-gray-700">Contacts</a>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             @endif
 

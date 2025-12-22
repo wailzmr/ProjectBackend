@@ -18,6 +18,18 @@
                     <x-nav-link :href="route('news.index')" :active="request()->routeIs('news.*')">
                         {{ __('News') }}
                     </x-nav-link>
+
+                    {{-- Public workouts link --}}
+                    <x-nav-link :href="route('workouts.index')" :active="request()->routeIs('workouts.*')">
+                        {{ __('Workouts') }}
+                    </x-nav-link>
+
+                    {{-- Admin-only exercises link --}}
+                    @if(Auth::check() && Auth::user()->is_admin)
+                        <x-nav-link :href="route('admin.exercises.index')" :active="request()->routeIs('admin.exercises.*')">
+                            {{ __('Exercises') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -76,6 +88,18 @@
             <x-responsive-nav-link :href="route('news.index')" :active="request()->routeIs('news.*')">
                 {{ __('News') }}
             </x-responsive-nav-link>
+
+            {{-- Public workouts link --}}
+            <x-responsive-nav-link :href="route('workouts.index')" :active="request()->routeIs('workouts.*')">
+                {{ __('Workouts') }}
+            </x-responsive-nav-link>
+
+            {{-- Admin-only exercises link --}}
+            @if(Auth::check() && Auth::user()->is_admin)
+                <x-responsive-nav-link :href="route('admin.exercises.index')" :active="request()->routeIs('admin.exercises.*')">
+                    {{ __('Exercises') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
