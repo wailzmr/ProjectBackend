@@ -26,18 +26,17 @@ Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 
 
-/**
- * Authenticated user profile (Breeze)
- */
-Route::middleware('auth')->group(function () {
-    // Breeze profile routes blijven zoals je hebt
-});
+
 
 /**
  * Fitness public pages (optioneel publiek) + user actions
  */
 Route::get('/workouts', [WorkoutController::class, 'index'])->name('workouts.index');
 Route::get('/workouts/{workout}', [WorkoutController::class, 'show'])->name('workouts.show');
+
+/**
+ * Authenticated user profile (Breeze)
+ */
 
 Route::middleware('auth')->group(function () {
     Route::post('/workouts/{workout}/toggle', [WorkoutController::class, 'toggle'])
@@ -63,7 +62,7 @@ Route::middleware(['auth', 'admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-        Route::resource('news', NewsController::class)->except(['show']);
+        Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
         Route::get('/faq', [FaqController::class, 'adminIndex'])->name('faq.admin');
         Route::resource('faq-categories', \App\Http\Controllers\Admin\FaqCategoryController::class);
         Route::resource('faqs', \App\Http\Controllers\Admin\FaqController::class);

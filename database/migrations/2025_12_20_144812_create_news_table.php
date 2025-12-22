@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('image_path')->nullable();
             $table->longText('content');
             $table->timestamp('published_at')->nullable();
-            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }
