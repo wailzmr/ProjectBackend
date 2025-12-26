@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 @props(['forceDark' => false])
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-    @if(!empty($forceDark))
-        x-data="{ dark: true }"
-        :class="{ 'dark': dark }"
-    @else
-        x-data="{ dark: localStorage.getItem('dark') === 'true' }"
-        x-init="$watch('dark', value => localStorage.setItem('dark', value))"
-        :class="{ 'dark': dark }"
-    @endif
+<html
+    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    x-data="{ dark: localStorage.getItem('dark') === 'true' }"
+    x-init="$watch('dark', value => localStorage.setItem('dark', value))"
+    :class="{ 'dark': dark }"
 >
     <head class="font-sans antialiased bg-slate-50 text-slate-800
              dark:bg-slate-900 dark:text-slate-100 transition-colors">
@@ -25,8 +21,10 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-slate-50 text-slate-800
-             dark:bg-slate-900 dark:text-slate-100 transition-colors">
+    <body class="font-sans antialiased
+             bg-slate-50 text-slate-800
+             dark:bg-slate-900 dark:text-slate-100
+             transition-colors">
     <div class="min-h-screen">
             @include('layouts.navigation')
 

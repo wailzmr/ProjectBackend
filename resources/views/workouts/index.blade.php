@@ -1,7 +1,7 @@
 
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:bg-slate-800 dark:text-slate-100">
 Workouts
         </h2>
     </x-slot>
@@ -16,7 +16,7 @@ Workouts
 @else
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach($workouts as $workout)
-            <div class="bg-white p-6 rounded shadow">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition dark:bg-slate-800  ">
                 <h3 class="text-lg font-semibold mb-2">
                     {{ $workout->title }}
                 </h3>

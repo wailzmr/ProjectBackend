@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }"
-     class="bg-white/80 dark:bg-slate-900/80 backdrop-blur
-            border-b border-slate-200 dark:border-slate-700
-            sticky top-0 z-50 transition-colors">
+     class="bg-white/80 dark:bg-slate-900/80
+       border-b border-slate-200 dark:border-slate-700
+       backdrop-blur transition-colors">
 <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -69,11 +69,13 @@
            text-gray-500 dark:text-slate-300
            hover:text-gray-700 dark:hover:text-white
            hover:border-gray-300 dark:hover:border-slate-500
-           focus:outline-none focus:text-gray-700 focus:border-gray-300
+           focus:outline-none
+           focus:text-gray-700 dark:focus:text-white
+           focus:border-gray-300 dark:focus:border-slate-500
            transition duration-150 ease-in-out"
                 title="Toggle dark mode"
             >
-                <!-- Sun icon -->
+            <!-- Sun icon -->
                 <svg x-show="!dark"
                      xmlns="http://www.w3.org/2000/svg"
                      class="h-5 w-5"
@@ -168,10 +170,15 @@
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
+        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-slate-700">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-slate-800 dark:text-slate-100">
+                    {{ Auth::user()->name }}
+                </div>
+                <div class="font-medium text-sm text-slate-500 dark:text-slate-400">
+                    {{ Auth::user()->email }}
+                </div>
+
             </div>
 
             <div class="mt-3 space-y-1">

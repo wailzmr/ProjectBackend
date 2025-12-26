@@ -41,14 +41,14 @@ text-slate-800 dark:text-slate-100 rounded-2xl
 
             {{-- Admin dashboard --}}
             @if(Auth::check() && Auth::user()->is_admin)
-                <div class="p-6 bg-white shadow rounded-lg ">
+                <div class="p-6 bg-white shadow rounded-lg dark:bg-slate-800 dark:text-slate-100">
                     <h3 class="text-lg font-semibold mb-4 text-gray-800 leading-tight dark:bg-slate-800 dark:text-slate-100">Admin panel</h3>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div
-                            class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition">
+                            class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition dark:bg-slate-800 ">
 
-                            <h4 class="text-lg font-semibold text-slate-800 mb-1">News</h4>
+                            <h4 class="text-lg font-semibold text-slate-800 mb-1 dark:text-slate-100">News</h4>
                             <p class="text-sm text-gray-600">Create and manage news posts.</p>
                             <div class="mt-3 flex gap-2">
                                 <a href="{{ route('admin.news.create') }}"
@@ -58,8 +58,8 @@ text-slate-800 dark:text-slate-100 rounded-2xl
                             </div>
                         </div>
 
-                        <div class="p-4 border rounded">
-                            <h4 class="text-lg font-semibold text-slate-800 mb-1">Workouts</h4>
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition dark:bg-slate-800 ">
+                            <h4 class="text-lg font-semibold text-slate-800 mb-1 dark:text-slate-100">Workouts</h4>
                             <p class="text-sm text-gray-600">Manage workout programs visible to users.</p>
                             <div class="mt-3">
                                 <a href="{{ route('admin.workouts.index') }}"
@@ -68,8 +68,8 @@ text-slate-800 dark:text-slate-100 rounded-2xl
                             </div>
                         </div>
 
-                        <div class="p-4 border rounded">
-                            <h4 class="text-lg font-semibold text-slate-800 mb-1">Exercises</h4>
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition dark:bg-slate-800 ">
+                            <h4 class="text-lg font-semibold text-slate-800 mb-1 dark:text-slate-100">Exercises</h4>
                             <p class="text-sm text-gray-600">Create and edit exercises used in workouts.</p>
                             <div class="mt-3">
                                 <a href="{{ route('admin.exercises.index') }}"
@@ -78,8 +78,8 @@ text-slate-800 dark:text-slate-100 rounded-2xl
                             </div>
                         </div>
 
-                        <div class="p-4 border rounded">
-                            <h4 class="text-lg font-semibold text-slate-800 mb-1">Users</h4>
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition dark:bg-slate-800 ">
+                            <h4 class="text-lg font-semibold text-slate-800 mb-1 dark:text-slate-100">Users</h4>
                             <p class="text-sm text-gray-600">View, create or manage users.</p>
                             <div class="mt-3">
                                 <a href="{{ route('admin.users.index') }}"
@@ -88,8 +88,8 @@ text-slate-800 dark:text-slate-100 rounded-2xl
                             </div>
                         </div>
 
-                        <div class="p-4 border rounded">
-                            <h4 class="text-lg font-semibold text-slate-800 mb-1">FAQ & Contacts</h4>
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition dark:bg-slate-800 ">
+                            <h4 class="text-lg font-semibold text-slate-800 mb-1 dark:text-slate-100">FAQ & Contacts</h4>
                             <p class="text-sm text-gray-600">Manage FAQs, FAQ categories and view contact messages.</p>
 
                             <div class="mt-3 flex flex-wrap gap-2">
