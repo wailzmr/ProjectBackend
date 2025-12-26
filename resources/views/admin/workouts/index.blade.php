@@ -1,6 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-slate-100
+">
             Admin · Workouts
         </h2>
     </x-slot>
@@ -14,7 +15,7 @@
                 </a>
             </div>
 
-            <div class="bg-white shadow rounded">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md transition dark:bg-slate-800 "">
                 <table class="w-full">
                     <thead class="border-b">
                     <tr class="text-left">

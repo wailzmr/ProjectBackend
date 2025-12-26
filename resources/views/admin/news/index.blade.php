@@ -1,9 +1,9 @@
 <x-app-layout>
     <div class="max-w-4xl mx-auto py-8">
         <div class="flex items-center justify-between mb-6">
-            <h1 class="text-3xl font-bold tracking-tight text-slate-900">News</h1>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">News</h1>
             <a href="{{ route('admin.news.create') }}"
-               class="inline-flex items-center px-5 py-2.5 bg-slate-900 text-white rounded-xl font-medium hover:bg-slate-800 transition">
+               class="inline-flex items-center px-5 py-2.5 bg-slate-900 text-white rounded-xl font-medium hover:bg-slate-800 transition ">
                 Create news</a>
         </div>
 
@@ -14,7 +14,7 @@
         @endif
 
         @foreach($news as $item)
-            <div class="mb-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+            <div class="mb-6 bg-white rounded-2xl p-6 shadow-sm border border-slate-200  dark:bg-slate-900 dark:border-slate-600 dark:text-slate-100 dark:placeholder-slate-500">
 
             <div class="flex flex-col sm:flex-row gap-4 items-start">
                     @if($item->image_path)

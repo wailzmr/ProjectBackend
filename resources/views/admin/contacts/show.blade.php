@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="py-12 max-w-3xl mx-auto">
-        <div class="bg-white p-6 rounded shadow space-y-4">
+        <div class="bg-white p-6 rounded shadow space-y-4 border border-slate-200 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
             <div>
                 <strong>Name:</strong> {{ $contactMessage->name }}
             </div>

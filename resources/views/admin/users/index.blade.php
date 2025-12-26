@@ -9,7 +9,9 @@
             Create user
         </a>
 
-        <table class="w-full bg-white rounded shadow">
+        <table class="w-full bg-white  border border-slate-200  dark:bg-slate-900 dark:border-slate-600
+dark:text-slate-100
+dark:placeholder-slate-500">
             <thead>
             <tr class="border-b">
                 <th class="p-3 text-left">Name</th>

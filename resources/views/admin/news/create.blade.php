@@ -16,13 +16,36 @@
             @csrf
 
             <label class="block mb-2 text-sm font-medium">Title</label>
-            <input name="title" placeholder="Title" value="{{ old('title') }}" class="w-full mb-3 border rounded px-2 py-1" required>
+            <input name="title" placeholder="Title" value="{{ old('title') }}" class="w-full
+        border border-slate-300 dark:border-slate-100
+        rounded p-2
+        bg-white dark:bg-slate-900
+        text-slate-900 dark:text-slate-100
+        placeholder-slate-400 dark:placeholder-slate-100
+        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
 
             <label class="block mb-2 text-sm font-medium">Content</label>
-            <textarea name="content" placeholder="Content" class="w-full mb-3 border rounded px-2 py-1" required>{{ old('content') }}</textarea>
+            <textarea name="content" placeholder="Content" class="w-full
+        border border-slate-300 dark:border-slate-100
+        rounded p-2
+        bg-white dark:bg-slate-900
+        text-slate-900 dark:text-slate-100
+        placeholder-slate-400 dark:placeholder-slate-100
+        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>{{ old('content') }}</textarea>
 
-            <label class="block mb-2 text-sm font-medium">Publish date</label>
-            <input type="date" name="published_at" value="{{ old('published_at') }}" class="mb-3 border rounded px-2 py-1">
+            <label class="block mb-2 text-sm font-medium ">Publish date</label>
+            <input
+                type="date"
+                name="published_at"
+                value="{{ old('published_at') }}"
+                class="mb-3
+        border border-slate-300 dark:border-slate-600
+        rounded px-2 py-1
+        bg-white dark:bg-slate-900
+        text-slate-900 dark:text-slate-100
+        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+    "
+            >
 
             <label class="block mb-2 text-sm font-medium">Image</label>
             <input type="file" name="image" class="mb-3">

@@ -44,6 +44,27 @@
             />
             <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
         </div>
+            <div>
+                <x-input-label for="birthday" value="Birthday" />
+
+                <input
+                    id="birthday"
+                    name="birthday"
+                    type="date"
+                    value="{{ old('birthday', optional($user->birthday)->format('Y-m-d')) }}"
+                    class="
+            mt-1 block w-full
+            border border-slate-300 dark:border-slate-600
+            rounded-md
+            bg-white dark:bg-slate-900
+            text-slate-900 dark:text-slate-100
+            focus:ring-2 focus:ring-indigo-500
+        "
+                    required
+                />
+
+                <x-input-error class="mt-2" :messages="$errors->get('birthday')" />
+            </div>
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />

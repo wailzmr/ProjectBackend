@@ -6,7 +6,9 @@
     </x-slot>
 
     <div class="py-12 max-w-xl mx-auto">
-        <div class="bg-white p-6 rounded shadow">
+        <div class="bg-white p-6 rounded border border-slate-200 dark:bg-slate-800 dark:border-slate-700 text-slate-800
+dark:text-slate-100
+dark:placeholder-slate-500">
 
             <form method="POST" action="{{ route('admin.users.store') }}">
                 @csrf
@@ -16,7 +18,13 @@
                     <input type="text"
                            name="name"
                            value="{{ old('name') }}"
-                           class="w-full border rounded p-2"
+                           class="w-full
+        border border-slate-300 dark:border-slate-600
+        rounded p-2
+        bg-white dark:bg-slate-900
+        text-slate-900 dark:text-slate-100
+        placeholder-slate-400 dark:placeholder-slate-500
+        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                            required>
                     @error('name') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
                 </div>
@@ -26,7 +34,13 @@
                     <input type="text"
                            name="username"
                            value="{{ old('username') }}"
-                           class="w-full border rounded p-2"
+                           class="w-full
+        border border-slate-300 dark:border-slate-600
+        rounded p-2
+        bg-white dark:bg-slate-900
+        text-slate-900 dark:text-slate-100
+        placeholder-slate-400 dark:placeholder-slate-500
+        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                            required>
                     @error('username') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
                 </div>
@@ -36,7 +50,13 @@
                     <input type="email"
                            name="email"
                            value="{{ old('email') }}"
-                           class="w-full border rounded p-2"
+                           class="w-full
+        border border-slate-300 dark:border-slate-600
+        rounded p-2
+        bg-white dark:bg-slate-900
+        text-slate-900 dark:text-slate-100
+        placeholder-slate-400 dark:placeholder-slate-500
+        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                            required>
                     @error('email') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
                 </div>
@@ -45,7 +65,13 @@
                     <label class="block font-medium">Password</label>
                     <input type="password"
                            name="password"
-                           class="w-full border rounded p-2"
+                           class="w-full
+        border border-slate-300 dark:border-slate-600
+        rounded p-2
+        bg-white dark:bg-slate-900
+        text-slate-900 dark:text-slate-100
+        placeholder-slate-400 dark:placeholder-slate-500
+        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                            required>
                     @error('password') <p class="text-red-600 text-sm">{{ $message }}</p> @enderror
                 </div>
@@ -54,7 +80,13 @@
                     <label class="block font-medium">Confirm password</label>
                     <input type="password"
                            name="password_confirmation"
-                           class="w-full border rounded p-2"
+                           class="w-full
+        border border-slate-300 dark:border-slate-600
+        rounded p-2
+        bg-white dark:bg-slate-900
+        text-slate-900 dark:text-slate-100
+        placeholder-slate-400 dark:placeholder-slate-500
+        focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                            required>
                 </div>
 

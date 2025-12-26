@@ -9,7 +9,10 @@
             Create category
         </a>
 
-        <div class="bg-white p-4 rounded shadow">
+        <div class="bg-white p-6 dark:border-slate-600
+dark:bg-slate-900
+dark:text-slate-100
+dark:placeholder-slate-500">
             @foreach($categories as $category)
                 <div class="flex justify-between items-center border-b py-3">
                     <span>{{ $category->name }}</span>

@@ -9,7 +9,12 @@
             Add FAQ
         </a>
 
-        <div class="bg-white p-4 rounded shadow">
+        <div class="bg-white p-4
+dark:border-slate-600
+dark:bg-slate-900
+dark:text-slate-100
+dark:placeholder-slate-500
+">
             @foreach($faqs as $faq)
                 <div class="border-b py-3">
                     <strong>{{ $faq->question }}</strong>

@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="py-12 max-w-5xl mx-auto">
-        <div class="bg-white rounded shadow divide-y">
+        <div class="bg-white rounded shadow divide-y border border-slate-200 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
             @forelse($messages as $message)
                 <a href="{{ route('admin.contacts.show', $message) }}"
                    class="block p-4 hover:bg-gray-50">
