@@ -43,3 +43,4 @@ Workouts
     </div>
     </div>
     </x-app-layout>
+

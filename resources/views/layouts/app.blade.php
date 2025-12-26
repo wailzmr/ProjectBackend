@@ -1,6 +1,17 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
+@props(['forceDark' => false])
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    @if(!empty($forceDark))
+        x-data="{ dark: true }"
+        :class="{ 'dark': dark }"
+    @else
+        x-data="{ dark: localStorage.getItem('dark') === 'true' }"
+        x-init="$watch('dark', value => localStorage.setItem('dark', value))"
+        :class="{ 'dark': dark }"
+    @endif
+>
+    <head class="font-sans antialiased bg-slate-50 text-slate-800
+             dark:bg-slate-900 dark:text-slate-100 transition-colors">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -14,15 +25,18 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+    <body class="font-sans antialiased bg-slate-50 text-slate-800
+             dark:bg-slate-900 dark:text-slate-100 transition-colors">
+    <div class="min-h-screen">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                <header class="py-6">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-xl p-6 shadow-sm">
+                            {{ $header }}
+                        </div>
                     </div>
                 </header>
             @endisset

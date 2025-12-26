@@ -1,17 +1,20 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
+<nav x-data="{ open: false }"
+     class="bg-white/80 dark:bg-slate-900/80 backdrop-blur
+            border-b border-slate-200 dark:border-slate-700
+            sticky top-0 z-50 transition-colors">
+<!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-6 sm:-my-px sm:ms-10 sm:flex items-center">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -57,6 +60,43 @@
                     @endif
                 </div>
             </div>
+
+            <button
+                @click="dark = !dark"
+                class="inline-flex items-center px-1 pt-1
+           border-b-2 border-transparent
+           text-sm font-medium leading-5
+           text-gray-500 dark:text-slate-300
+           hover:text-gray-700 dark:hover:text-white
+           hover:border-gray-300 dark:hover:border-slate-500
+           focus:outline-none focus:text-gray-700 focus:border-gray-300
+           transition duration-150 ease-in-out"
+                title="Toggle dark mode"
+            >
+                <!-- Sun icon -->
+                <svg x-show="!dark"
+                     xmlns="http://www.w3.org/2000/svg"
+                     class="h-5 w-5"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 3v1m0 16v1m8.66-8.66h-1M4.34 12H3m15.36 6.36l-.7-.7M6.34 6.34l-.7-.7m12.02 0l-.7.7M6.34 17.66l-.7.7M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                </svg>
+
+                <!-- Moon icon -->
+                <svg x-show="dark"
+                     xmlns="http://www.w3.org/2000/svg"
+                     class="h-5 w-5"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M21 12.79A9 9 0 1111.21 3
+                 a7 7 0 009.79 9.79z" />
+                </svg>
+            </button>
+
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -153,3 +193,4 @@
         </div>
     </div>
 </nav>
+
