@@ -11,4 +11,9 @@ class News extends Model
     protected $casts = ['published_at' => 'datetime'];
 
     public function author() { return $this->belongsTo(User::class, 'created_by'); }
+
+    public function comments()
+    {
+        return $this->hasMany(NewsComment::class)->latest();
+    }
 }

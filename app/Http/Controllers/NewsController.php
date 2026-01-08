@@ -14,7 +14,8 @@ class NewsController extends Controller
 
     public function show(News $news)
     {
+        $news->load(['author', 'comments.user']);
+
         return view('news.show', compact('news'));
     }
 }
-
