@@ -1,6 +1,5 @@
 <nav x-data="{ open: false }"
-     class="bg-white/80 dark:bg-slate-900/80
-       border-b border-slate-200 dark:border-slate-700
+     class="bg-white/70 dark:bg-slate-900/70
        backdrop-blur transition-colors">
 <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -29,16 +29,13 @@
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-            @isset($header)
-                <header class="py-6">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-xl p-6 shadow-sm">
-                            {{ $header }}
-                        </div>
-                    </div>
-                </header>
-            @endisset
-
+        @isset($header)
+            <header class="bg-transparent">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    {{ $header }}
+                </div>
+            </header>
+        @endisset
             <!-- Page Content -->
             <main>
                 {{ $slot }}
