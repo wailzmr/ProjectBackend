@@ -16,30 +16,9 @@
         </div>
     </x-slot>
 
-    {{-- Page wrapper with gradient --}}
-    <div class="relative min-h-screen
-                bg-gradient-to-br from-indigo-50 via-white to-purple-100
-                dark:from-slate-900 dark:via-slate-900 dark:to-slate-800
-                overflow-hidden">
-
-        {{-- Background glow --}}
-        <div class="absolute -top-32 -left-32 w-[500px] h-[500px]
-                    bg-indigo-400/20 dark:bg-indigo-500/10
-                    rounded-full blur-3xl"></div>
-
-        <div class="absolute -bottom-32 -right-32 w-[500px] h-[500px]
-                    bg-purple-400/20 dark:bg-purple-500/10
-                    rounded-full blur-3xl"></div>
-
-        {{-- Content --}}
-        <div class="relative z-10 max-w-7xl mx-auto sm:px-6 lg:px-8 py-12 space-y-8">
-
             {{-- REGULAR USER --}}
             @if(Auth::check() && !Auth::user()->is_admin)
-                <div class="bg-white/80 dark:bg-slate-800/80
-                            backdrop-blur-xl
-                            border border-slate-200 dark:border-slate-700
-                            rounded-2xl p-8 shadow-sm">
+
 
                     <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-2">
                         Welcome
@@ -76,10 +55,7 @@
 
             {{-- ADMIN PANEL --}}
             @if(Auth::check() && Auth::user()->is_admin)
-                <div class="bg-white/80 dark:bg-slate-800/80
-                            backdrop-blur-xl
-                            border border-slate-200 dark:border-slate-700
-                            rounded-2xl p-8 shadow-sm">
+
 
                     <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-6">
                         Admin panel
