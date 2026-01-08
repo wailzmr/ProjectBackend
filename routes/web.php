@@ -8,6 +8,9 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\NewsCommentController;
+use App\Http\Controllers\PublicProfileController;
+use App\Http\Controllers\ForumController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -44,16 +47,43 @@ Route::middleware('auth')->group(function () {
 });
 
 /**
- * Admin panel
- *
-
- */
-
-
-/**
  * Public news (read-only)
  */
 Route::resource('news', NewsController::class)->only(['index', 'show']);
+
+// News comments (auth only)
+Route::middleware('auth')->group(function () {
+    Route::post('/news/{news}/comments', [NewsCommentController::class, 'store'])
+        ->name('news.comments.store');
+
+    // Update comment (owner) - authorization enforced in controller
+    Route::patch('/news/{news}/comments/{comment}', [NewsCommentController::class, 'update'])
+        ->name('news.comments.update');
+
+    // Delete comment (owner or admin) - authorization enforced in controller
+    Route::delete('/news/{news}/comments/{comment}', [NewsCommentController::class, 'destroy'])
+        ->name('news.comments.destroy');
+});
+
+// Public user profiles
+Route::get('/users/{user}', [PublicProfileController::class, 'show'])->name('users.show');
+
+/**
+ * Forum (public read, auth write)
+ */
+Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
+Route::get('/forum/{thread}', [ForumController::class, 'show'])->name('forum.show');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/forum/threads', [ForumController::class, 'storeThread'])->name('forum.threads.store');
+    Route::post('/forum/{thread}/posts', [ForumController::class, 'storePost'])->name('forum.posts.store');
+});
+
+// Admin forum moderation (delete)
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::delete('/forum/{thread}', [ForumController::class, 'destroyThread'])->name('forum.threads.destroy');
+    Route::delete('/forum/posts/{post}', [ForumController::class, 'destroyPost'])->name('forum.posts.destroy');
+});
 
 /**
  * Admin news (CRUD)

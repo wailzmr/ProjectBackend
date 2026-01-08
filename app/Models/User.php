@@ -63,4 +63,18 @@ class User extends Authenticatable
         return $this->hasMany(News::class);
     }
 
+    public function newsComments()
+    {
+        return $this->hasMany(NewsComment::class);
+    }
+
+    public function forumThreads()
+    {
+        return $this->hasMany(ForumThread::class);
+    }
+
+    public function forumPosts()
+    {
+        return $this->hasMany(ForumPost::class);
+    }
 }
