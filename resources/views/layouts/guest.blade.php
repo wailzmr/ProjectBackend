@@ -11,16 +11,18 @@
 </head>
 
 <body class="font-sans antialiased
-             min-h-screen flex items-center justify-center
-             bg-gradient-to-br from-indigo-50 via-white to-purple-100
-             relative overflow-hidden">
+             min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-100
+             relative overflow-x-hidden">
 
+<div class="absolute -top-32 -left-32 w-[500px] h-[500px] bg-indigo-400/30 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-purple-400/30 rounded-full blur-3xl pointer-events-none"></div>
 
-<div class="absolute -top-32 -left-32 w-[500px] h-[500px] bg-indigo-400/30 rounded-full blur-3xl"></div>
-<div class="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-purple-400/30 rounded-full blur-3xl"></div>
-
-<div class="relative z-10 w-full max-w-md">
-    {{ $slot }}
+<div class="relative z-10 min-h-screen w-full flex items-start justify-center px-4 py-10">
+    <div class="w-full max-w-md">
+        <div class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-md rounded-2xl shadow-lg p-6 md:p-8 transition-colors">
+            {{ $slot }}
+        </div>
+    </div>
 </div>
 </body>
 </html>
