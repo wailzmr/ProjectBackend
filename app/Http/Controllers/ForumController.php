@@ -6,6 +6,7 @@ use App\Http\Requests\StoreForumPostRequest;
 use App\Http\Requests\StoreForumThreadRequest;
 use App\Models\ForumPost;
 use App\Models\ForumThread;
+use Illuminate\Http\Request;
 
 class ForumController extends Controller
 {
@@ -54,6 +55,45 @@ class ForumController extends Controller
     }
 
     /**
+     * User: update own post.
+     */
+    public function updatePost(Request $request, ForumPost $post)
+    {
+        if ($request->user()->id !== $post->user_id) {
+            abort(403);
+        }
+
+        $data = $request->validate([
+            'body' => ['required', 'string', 'min:1', 'max:5000'],
+        ]);
+
+        $post->update($data);
+
+        return redirect()
+            ->route('forum.show', $post->thread)
+            ->with('status', 'Post updated.');
+    }
+
+    /**
+     * Delete a single post (owner or admin).
+     */
+    public function destroyPost(ForumPost $post)
+    {
+        $user = request()->user();
+
+        if (!$user || ($user->id !== $post->user_id && !$user->is_admin)) {
+            abort(403);
+        }
+
+        $thread = $post->thread;
+        $post->delete();
+
+        return redirect()
+            ->route('forum.show', $thread)
+            ->with('status', 'Post deleted.');
+    }
+
+    /**
      * Admin: delete a whole thread (and its posts via cascade).
      */
     public function destroyThread(ForumThread $thread)
@@ -63,20 +103,5 @@ class ForumController extends Controller
         return redirect()
             ->route('forum.index')
             ->with('status', 'Thread deleted.');
-    }
-
-    /**
-     * Admin: delete a single post.
-     */
-    public function destroyPost(ForumPost $post)
-    {
-        $thread = $post->thread;
-        $post->delete();
-
-        // If last post was removed and you don't want empty threads, you could also delete the thread,
-        // but for now we keep the thread as-is.
-        return redirect()
-            ->route('forum.show', $thread)
-            ->with('status', 'Post deleted.');
     }
 }

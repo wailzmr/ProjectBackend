@@ -77,12 +77,14 @@ Route::get('/forum/{thread}', [ForumController::class, 'show'])->name('forum.sho
 Route::middleware('auth')->group(function () {
     Route::post('/forum/threads', [ForumController::class, 'storeThread'])->name('forum.threads.store');
     Route::post('/forum/{thread}/posts', [ForumController::class, 'storePost'])->name('forum.posts.store');
+
+    Route::patch('/forum/posts/{post}', [ForumController::class, 'updatePost'])->name('forum.posts.update');
+    Route::delete('/forum/posts/{post}', [ForumController::class, 'destroyPost'])->name('forum.posts.destroy');
 });
 
 // Admin forum moderation (delete)
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/forum/{thread}', [ForumController::class, 'destroyThread'])->name('forum.threads.destroy');
-    Route::delete('/forum/posts/{post}', [ForumController::class, 'destroyPost'])->name('forum.posts.destroy');
 });
 
 /**
