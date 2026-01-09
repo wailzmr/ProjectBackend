@@ -7,7 +7,7 @@
         <div class="bg-white rounded shadow divide-y border border-slate-200 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
             @forelse($messages as $message)
                 <a href="{{ route('admin.contacts.show', $message) }}"
-                   class="block p-4 hover:bg-gray-50">
+                   class="block p-4 hover:bg-gray-50 dark:hover:text-gray-900">
                     <strong>{{ $message->name }}</strong>
                     <span class="text-sm text-gray-600">
                         ({{ $message->email }})
