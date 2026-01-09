@@ -1,59 +1,242 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Backend Web Project (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel project voor **Backend Web**.
 
-## About Laravel
+## Requirements
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **PHP**: 8.2+ (project gebruikt Laravel 12)
+- **Composer**
+- **Node.js + npm** (voor Vite/Tailwind build)
+- Database:
+  - **SQLite** (default, geen database server nodig)
+  - of MySQL/MariaDB
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### PHP & Composer installeren (Windows)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Aanrader: **Laravel Herd** (installeert PHP + Composer + handige tooling)
+- https://herd.laravel.com
 
-## Learning Laravel
+Alternatief: manuele installatie
+- PHP: https://windows.php.net/download/
+- Composer: https://getcomposer.org/download/
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Verifiëren:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```powershell
+php -v
+composer -V
+node -v
+npm -v
+```
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Setup
 
-### Premium Partners
+### 1) Repo clonen
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```powershell
+git clone <repository-url>
+cd laravelbackendproject
+```
 
-## Contributing
+### 2) PHP dependencies installeren
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```powershell
+composer install
+```
 
-## Code of Conduct
+### 3) `.env` maken + app key genereren
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```powershell
+copy .env.example .env
+php artisan key:generate
+```
 
-## Security Vulnerabilities
+### 4) Database (SQLite quick start)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+In `.env.example` staat standaard:
+
+- `DB_CONNECTION=sqlite`
+
+Laravel gebruikt de SQLite file `database/database.sqlite`.
+
+Maak de file aan (indien nodig):
+
+```powershell
+if (!(Test-Path database\database.sqlite)) { New-Item -Path database\database.sqlite -ItemType File | Out-Null }
+```
+
+### 5) Migraties + seed
+
+```powershell
+php artisan migrate:fresh --seed
+```
+
+### 6) Storage symlink (voor avatars/uploads)
+
+```powershell
+php artisan storage:link
+```
+
+### 7) Frontend build (Tailwind/Vite)
+
+```powershell
+npm install
+npm run build
+```
+
+### 8) Server starten
+
+```powershell
+php artisan serve
+```
+
+Open daarna:
+- http://127.0.0.1:8000
+
+---
+
+## Quick start (voor evaluatie)
+
+Onderstaande is voldoende om alles te runnen met SQLite:
+
+```powershell
+copy .env.example .env
+php artisan key:generate
+if (!(Test-Path database\database.sqlite)) { New-Item -Path database\database.sqlite -ItemType File | Out-Null }
+php artisan migrate:fresh --seed
+php artisan storage:link
+npm install
+npm run build
+php artisan serve
+```
+
+---
+
+## Default accounts (na `--seed`)
+
+### Admin (verplicht)
+- **Email**: `admin@ehb.be`
+- **Username**: `admin`
+- **Password**: `Password!321`
+
+### Test user
+- **Email**: `test@example.com`
+- **Password**: `Password!321`
+
+> De admin user wordt aangemaakt door `database/seeders/DatabaseSeeder.php`.
+
+---
+
+## Belangrijke routes
+
+- Home: `/`
+- Dashboard: `/dashboard`
+- Auth: `/login`, `/register`, `/forgot-password`
+- Forum: `/forum`
+- News: `/news`
+- FAQ: `/faq`
+- Contact: `/contact`
+- **My contact messages**: `/contacts` (ingelogd)
+- Admin panel (CRUD): onder `/admin/*`
+  - voorbeeld: `/admin/news`, `/admin/workouts`, `/admin/contacts`
+
+---
+
+## Features
+
+### Authenticatie
+- Register / Login / Logout
+- Password reset (MAIL_MAILER=log → zie logs)
+
+### Rollen
+- User / Admin (`users.is_admin`)
+- Admin middleware blokkeert niet-admins op admin routes
+
+### Forum
+- Threads bekijken + aanmaken
+- Posts plaatsen
+- **User kan eigen post editen en deleten**
+- **Admin kan elke post deleten**
+
+### News
+- Publieke news lijst + detail
+- Comments (auth)
+- Admin beheer (CRUD)
+
+### FAQ
+- Publieke FAQ pagina
+- Admin beheer (CRUD)
+
+### Contact
+- Publiek contactformulier
+- Contactmessages worden gelinkt aan ingelogde user (`contact_messages.user_id`)
+- User kan eigen contact thread bekijken + replies zien
+- Admin kan replies sturen
+
+### Profile
+- Profiel aanpassen (naam/email/username/birthday/about)
+- Profielfoto upload (avatar)
+
+---
+
+## Mail / password reset testen
+
+In `.env.example` staat:
+
+- `MAIL_MAILER=log`
+
+Reset emails worden dan geschreven naar:
+- `storage/logs/laravel.log`
+
+Werkwijze:
+1. Vraag password reset aan via `/forgot-password`
+2. Open `storage/logs/laravel.log`
+3. Kopieer de reset link
+
+---
+
+## Troubleshooting
+
+### "vendor/autoload.php" missing
+Je hebt `composer install` nog niet uitgevoerd.
+
+### SQLite driver ontbreekt ("could not find driver")
+Zet in `php.ini` deze extensions aan:
+- `pdo_sqlite`
+- `sqlite3`
+
+Verifiëren:
+
+```powershell
+php -m | findstr sqlite
+```
+
+### Uploads/avatars niet zichtbaar
+
+```powershell
+php artisan storage:link
+```
+
+### Config cache issues
+
+```powershell
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+```
+
+---
+
+## Testing
+
+```powershell
+php artisan test
+```
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Educational project.
