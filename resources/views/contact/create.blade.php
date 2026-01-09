@@ -5,11 +5,11 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-xl mx-auto bg-white p-6 rounded shadow">
+
+
 
             @if(session('success'))
-                <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
+                <div class="mb-4 p-3 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded">
                     {{ session('success') }}
                 </div>
             @endif
@@ -18,60 +18,60 @@
                 @csrf
 
                 <div class="mb-4">
-                    <label class="block font-medium">Name</label>
+                    <label class="block font-medium text-gray-700 dark:text-gray-300">Name</label>
                     <input type="text"
                            name="name"
                            value="{{ old('name') }}"
-                           class="w-full border rounded p-2"
+                           class="w-full border rounded p-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                            required>
                     @error('name')
-                    <p class="text-red-600 text-sm">{{ $message }}</p>
+                    <p class="text-red-600 dark:text-red-400 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="mb-4">
-                    <label class="block font-medium">Email</label>
+                    <label class="block font-medium text-gray-700 dark:text-gray-300">Email</label>
                     <input type="email"
                            name="email"
                            value="{{ old('email') }}"
-                           class="w-full border rounded p-2"
+                           class="w-full border rounded p-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                            required>
                     @error('email')
-                    <p class="text-red-600 text-sm">{{ $message }}</p>
+                    <p class="text-red-600 dark:text-red-400 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="mb-4">
-                    <label class="block font-medium">Subject</label>
+                    <label class="block font-medium text-gray-700 dark:text-gray-300">Subject</label>
                     <input type="text"
                            name="subject"
                            value="{{ old('subject') }}"
-                           class="w-full border rounded p-2"
+                           class="w-full border rounded p-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                            required>
                     @error('subject')
-                    <p class="text-red-600 text-sm">{{ $message }}</p>
+                    <p class="text-red-600 dark:text-red-400 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
 
                 <div class="mb-4">
-                    <label class="block font-medium">Message</label>
+                    <label class="block font-medium text-gray-700 dark:text-gray-300">Message</label>
                     <textarea name="message"
-                              class="w-full border rounded p-2"
+                              class="w-full border rounded p-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                               rows="5"
                               required>{{ old('message') }}</textarea>
                     @error('message')
-                    <p class="text-red-600 text-sm">{{ $message }}</p>
+                    <p class="text-red-600 dark:text-red-400 text-sm">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <button type="submit"
-                        class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                        class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600">
                     Send message
                 </button>
             </form>
 
-        </div>
-    </div>
+
+
 </x-app-layout>
 
