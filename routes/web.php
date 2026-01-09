@@ -151,5 +151,9 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
+
+    Route::get('/contacts', [ContactController::class, 'userIndex'])->name('contacts.user.index');
+    Route::get('/contacts/{contactMessage}/thread', [ContactController::class, 'userThread'])->name('contacts.thread');
+    Route::post('/contacts/{contactMessage}/reply', [ContactController::class, 'storeUserReply'])->name('contacts.user.reply');
 });
 require __DIR__.'/auth.php';

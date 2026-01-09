@@ -1,77 +1,45 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold">
-            Contact
-        </h2>
+        <h2 class="text-xl font-semibold">Contact Us</h2>
     </x-slot>
 
+    <div class="py-12 max-w-5xl mx-auto">
+        <div class="bg-white rounded shadow divide-y border border-slate-200 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+            <div class="p-4">
+                <form method="POST" action="{{ route('contact.store') }}">
+                    @csrf
+                    <div class="mb-4">
+                        <label for="name" class="block text-sm font-medium">Name</label>
+                        <input type="text" name="name" id="name" class="w-full p-2 border rounded" required>
+                    </div>
 
+                    <div class="mb-4">
+                        <label for="email" class="block text-sm font-medium">Email</label>
+                        <input type="email" name="email" id="email" class="w-full p-2 border rounded" required>
+                    </div>
 
+                    <div class="mb-4">
+                        <label for="subject" class="block text-sm font-medium">Subject</label>
+                        <input type="text" name="subject" id="subject" class="w-full p-2 border rounded" required>
+                    </div>
 
-            @if(session('success'))
-                <div class="mb-4 p-3 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded">
-                    {{ session('success') }}
+                    <div class="mb-4">
+                        <label for="message" class="block text-sm font-medium">Message</label>
+                        <textarea name="message" id="message" class="w-full p-2 border rounded" rows="4" required></textarea>
+                    </div>
+
+                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Send Message</button>
+                </form>
+            </div>
+
+            @auth
+                <div class="p-4">
+                    <a href="{{ route('contacts.user.index') }}"
+                       class="inline-flex items-center justify-center px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition">
+                        View my contact messages
+                    </a>
                 </div>
-            @endif
-
-            <form method="POST" action="{{ route('contact.store') }}">
-                @csrf
-
-                <div class="mb-4">
-                    <label class="block font-medium text-gray-700 dark:text-gray-300">Name</label>
-                    <input type="text"
-                           name="name"
-                           value="{{ old('name') }}"
-                           class="w-full border rounded p-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                           required>
-                    @error('name')
-                    <p class="text-red-600 dark:text-red-400 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="mb-4">
-                    <label class="block font-medium text-gray-700 dark:text-gray-300">Email</label>
-                    <input type="email"
-                           name="email"
-                           value="{{ old('email') }}"
-                           class="w-full border rounded p-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                           required>
-                    @error('email')
-                    <p class="text-red-600 dark:text-red-400 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="mb-4">
-                    <label class="block font-medium text-gray-700 dark:text-gray-300">Subject</label>
-                    <input type="text"
-                           name="subject"
-                           value="{{ old('subject') }}"
-                           class="w-full border rounded p-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                           required>
-                    @error('subject')
-                    <p class="text-red-600 dark:text-red-400 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-
-                <div class="mb-4">
-                    <label class="block font-medium text-gray-700 dark:text-gray-300">Message</label>
-                    <textarea name="message"
-                              class="w-full border rounded p-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                              rows="5"
-                              required>{{ old('message') }}</textarea>
-                    @error('message')
-                    <p class="text-red-600 dark:text-red-400 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <button type="submit"
-                        class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600">
-                    Send message
-                </button>
-            </form>
-
-
-
+            @endauth
+        </div>
+    </div>
 </x-app-layout>
-

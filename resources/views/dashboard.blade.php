@@ -50,6 +50,18 @@
                             Contact Us
                         </a>
                     </div>
+
+                    {{-- Contact Message Thread --}}
+                    @if(isset($contactMessageId))
+                        <div class="mt-4">
+                            <a href="{{ route('contacts.user.index') }}"
+                               class="flex items-center justify-center px-5 py-3
+                                      bg-blue-600 text-white rounded-xl font-medium
+                                      hover:bg-blue-700 transition">
+                                View my contact messages
+                            </a>
+                        </div>
+                    @endif
                 </div>
             @endif
 

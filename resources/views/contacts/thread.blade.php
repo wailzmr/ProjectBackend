@@ -1,6 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold">Admin · Contact Message</h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-xl font-semibold">Contact Message Thread</h2>
+            <a href="{{ route('contacts.user.index') }}" class="text-sm text-blue-600 hover:underline">Back to my messages</a>
+        </div>
     </x-slot>
 
     <div class="py-12 max-w-5xl mx-auto">
@@ -20,7 +23,7 @@
                     <div class="mt-2 p-2 border rounded bg-gray-50 dark:bg-slate-700">
                         <div class="flex items-center justify-between">
                             <span class="text-xs font-semibold uppercase tracking-wide {{ $reply->is_admin ? 'text-indigo-600' : 'text-emerald-600' }}">
-                                {{ $reply->is_admin ? 'Admin' : 'User' }}
+                                {{ $reply->is_admin ? 'Admin' : 'You' }}
                             </span>
                             <div class="text-sm text-gray-500">
                                 {{ $reply->created_at->format('d/m/Y H:i') }}
@@ -34,7 +37,7 @@
             </div>
 
             <div class="p-4">
-                <form method="POST" action="{{ route('admin.contacts.reply', $contactMessage) }}">
+                <form method="POST" action="{{ route('contacts.user.reply', $contactMessage) }}">
                     @csrf
                     <textarea name="reply" class="w-full p-2 border rounded" rows="4" placeholder="Write your reply here..." required></textarea>
                     <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Send Reply</button>
