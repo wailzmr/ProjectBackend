@@ -1,36 +1,14 @@
 <section>
-    @php
-        /** @var \App\Models\User $user */
-        $user = $user ?? auth()->user();
-    @endphp
-
     <header>
         <h2 class="text-lg font-medium text-gray-900 dark:text-slate-100">
             {{ __('Profile Information') }}
         </h2>
-
         <p class="mt-1 text-sm text-gray-600 dark:text-slate-300">
-            {{ __("Update your account's profile information and email address.") }}
+            {{ __('Update your account profile information and email address.') }}
         </p>
     </header>
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-        @csrf
-    </form>
-
-    <form method="post"
-          action="{{ route('profile.update') }}"
-          enctype="multipart/form-data"
-          class="mt-6 space-y-6">
-
-        @if ($user && $user->avatar_path)
-            <img
-                src="{{ asset('storage/' . $user->avatar_path) }}"
-                alt="Profile picture"
-                class="w-16 h-16 rounded-full object-cover mb-4"
-            >
-        @endif
-
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
@@ -39,38 +17,7 @@
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
-        <div class="mt-4">
-            <x-input-label for="avatar" :value="__('Profile picture')" />
-            <input
-                id="avatar"
-                name="avatar"
-                type="file"
-                class="mt-1 block w-full"
-                accept="image/*"
-            />
-            <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
-        </div>
-            <div>
-                <x-input-label for="birthday" value="Birthday" />
 
-                <input
-                    id="birthday"
-                    name="birthday"
-                    type="date"
-                    value="{{ old('birthday', optional($user->birthday)->format('Y-m-d')) }}"
-                    class="
-            mt-1 block w-full
-            border border-slate-300 dark:border-slate-600
-            rounded-md
-            bg-white dark:bg-slate-900
-            text-slate-900 dark:text-slate-100
-            focus:ring-2 focus:ring-indigo-500
-        "
-                    required
-                />
-
-                <x-input-error class="mt-2" :messages="$errors->get('birthday')" />
-            </div>
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
@@ -99,7 +46,13 @@
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
-                <p class="text-sm text-gray-600 dark:text-slate-300">
+                <p
+                    x-data="{ show: true }"
+                    x-show="show"
+                    x-transition
+                    x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-gray-600 dark:text-slate-300"
+                >
                     {{ __('Saved.') }}
                 </p>
             @endif

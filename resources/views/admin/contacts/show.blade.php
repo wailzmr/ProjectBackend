@@ -1,27 +1,40 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-xl font-semibold">Contact message</h2>
+        <h2 class="text-xl font-semibold">Admin · Contact Message</h2>
     </x-slot>
 
-    <div class="py-12 max-w-3xl mx-auto">
-        <div class="bg-white p-6 rounded shadow space-y-4 border border-slate-200 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
-            <div>
-                <strong>Name:</strong> {{ $contactMessage->name }}
+    <div class="py-12 max-w-5xl mx-auto">
+        <div class="bg-white rounded shadow divide-y border border-slate-200 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100">
+            <div class="p-4">
+                <strong>{{ $contactMessage->name }}</strong>
+                <span class="text-sm text-gray-600">({{ $contactMessage->email }})</span>
+                <div class="text-sm text-gray-500">
+                    {{ $contactMessage->created_at->format('d/m/Y H:i') }}
+                </div>
+                <p class="mt-4">{{ $contactMessage->message }}</p>
             </div>
 
-            <div>
-                <strong>Email:</strong> {{ $contactMessage->email }}
+            <div class="p-4">
+                <h3 class="text-lg font-semibold">Replies</h3>
+                @forelse($contactMessage->replies as $reply)
+                    <div class="mt-2 p-2 border rounded bg-gray-50 dark:bg-slate-700">
+                        <p>{{ $reply->reply }}</p>
+                        <div class="text-sm text-gray-500">
+                            {{ $reply->created_at->format('d/m/Y H:i') }}
+                        </div>
+                    </div>
+                @empty
+                    <p>No replies yet.</p>
+                @endforelse
             </div>
 
-            <div>
-                <strong>Message:</strong>
-                <p class="mt-2">{{ $contactMessage->message }}</p>
+            <div class="p-4">
+                <form method="POST" action="{{ route('admin.contacts.reply', $contactMessage) }}">
+                    @csrf
+                    <textarea name="reply" class="w-full p-2 border rounded" rows="4" placeholder="Write your reply here..." required></textarea>
+                    <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Send Reply</button>
+                </form>
             </div>
-
-            <a href="{{ route('admin.contacts.index') }}"
-               class="inline-block px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
-                Back
-            </a>
         </div>
     </div>
 </x-app-layout>

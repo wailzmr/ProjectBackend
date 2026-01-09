@@ -112,7 +112,8 @@ Route::middleware(['auth', 'admin'])
 
 
         Route::get('/contacts', [ContactController::class, 'adminIndex'])->name('contacts.index');
-        Route::get('/contacts/{contactMessage}', [ContactController::class, 'adminShow'])->name('contacts.show');
+        Route::get('/contacts/{contactMessage}', [ContactController::class, 'show'])->name('contacts.show');
+        Route::post('/contacts/{contactMessage}/reply', [ContactController::class, 'storeReply'])->name('contacts.reply');
 
         Route::get('/users', [UserManagementController::class, 'index'])->name('users.index');
         Route::get('/users/create', [UserManagementController::class, 'create'])->name('users.create');

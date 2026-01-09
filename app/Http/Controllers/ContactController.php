@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Models\ContactMessageReply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -56,5 +57,28 @@ class ContactController extends Controller
     public function adminShow(ContactMessage $contactMessage)
     {
         return view('admin.contacts.show', compact('contactMessage'));
+    }
+
+    /**
+     * Admin: show a single contact message with replies
+     */
+    public function show(ContactMessage $contactMessage)
+    {
+        $contactMessage->load('replies');
+        return view('admin.contacts.show', compact('contactMessage'));
+    }
+
+    /**
+     * Admin: store a reply to a contact message
+     */
+    public function storeReply(Request $request, ContactMessage $contactMessage)
+    {
+        $data = $request->validate([
+            'reply' => 'required|string',
+        ]);
+
+        $contactMessage->replies()->create($data);
+
+        return back()->with('success', 'Reply sent successfully.');
     }
 }

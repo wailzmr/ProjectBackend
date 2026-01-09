@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ContactMessage extends Model
+class ContactMessageReply extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'email',
-        'subject',
-        'message',
+        'contact_message_id',
+        'reply',
     ];
 
-    public function replies()
+    public function contactMessage()
     {
-        return $this->hasMany(ContactMessageReply::class);
+        return $this->belongsTo(ContactMessage::class);
     }
 }
