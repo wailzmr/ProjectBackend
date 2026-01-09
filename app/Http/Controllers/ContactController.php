@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ContactMessage;
 use App\Models\ContactMessageReply;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -14,7 +15,16 @@ class ContactController extends Controller
      */
     public function create()
     {
-        return view('contact.create');
+        $contactMessageId = null;
+
+        if (Auth::check()) {
+            $contactMessage = ContactMessage::where('user_id', Auth::id())->latest()->first();
+            if ($contactMessage) {
+                $contactMessageId = $contactMessage->id;
+            }
+        }
+
+        return view('contact.create', compact('contactMessageId'));
     }
 
     /**
@@ -29,6 +39,7 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
+        $data['user_id'] = Auth::id();
 
         ContactMessage::create($data);
 
@@ -77,7 +88,62 @@ class ContactController extends Controller
             'reply' => 'required|string',
         ]);
 
-        $contactMessage->replies()->create($data);
+        $contactMessage->replies()->create([
+            'reply' => $data['reply'],
+            'user_id' => Auth::id(),
+            'is_admin' => true,
+        ]);
+
+        return back()->with('success', 'Reply sent successfully.');
+    }
+
+    /**
+     * User: list own contact messages
+     */
+    public function userIndex()
+    {
+        $messages = ContactMessage::query()
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->get();
+
+        return view('contacts.index', compact('messages'));
+    }
+
+    /**
+     * User: view contact message thread
+     */
+    public function userThread(ContactMessage $contactMessage)
+    {
+        if ($contactMessage->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $contactMessage->load(['replies' => function ($q) {
+            $q->latest();
+        }]);
+
+        return view('contacts.thread', compact('contactMessage'));
+    }
+
+    /**
+     * User: store a reply to a contact message
+     */
+    public function storeUserReply(Request $request, ContactMessage $contactMessage)
+    {
+        if ($contactMessage->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $data = $request->validate([
+            'reply' => 'required|string',
+        ]);
+
+        $contactMessage->replies()->create([
+            'reply' => $data['reply'],
+            'user_id' => Auth::id(),
+            'is_admin' => false,
+        ]);
 
         return back()->with('success', 'Reply sent successfully.');
     }

@@ -10,6 +10,7 @@ class ContactMessage extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'email',
         'subject',
@@ -19,5 +20,10 @@ class ContactMessage extends Model
     public function replies()
     {
         return $this->hasMany(ContactMessageReply::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
