@@ -5,56 +5,23 @@
         </div>
 
         <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-800/50 p-6">
-            <div class="flex items-start justify-between gap-4">
-                <div>
-                    <h1 class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{ $thread->title }}</h1>
-                    <div class="mt-2 text-sm text-slate-500 dark:text-slate-400">
-                        Started by <a class="hover:underline" href="{{ route('users.show', $thread->user) }}">{{ $thread->user->username ?? $thread->user->name }}</a>
-                        · {{ $thread->created_at->diffForHumans() }}
-                    </div>
-                </div>
-
-                @auth
-                    @if(auth()->user()->is_admin)
-                        <form method="POST" action="{{ route('forum.threads.destroy', $thread) }}"
-                              onsubmit="return confirm('Delete this thread? This will remove all posts.');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-sm text-red-600 hover:underline">
-                                Delete thread
-                            </button>
-                        </form>
-                    @endif
-                @endauth
+            <h1 class="text-2xl font-bold text-slate-800 dark:text-slate-100">{{ $thread->title }}</h1>
+            <div class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                Started by <a class="hover:underline" href="{{ route('users.show', $thread->user) }}">{{ $thread->user->username ?? $thread->user->name }}</a>
+                · {{ $thread->created_at->diffForHumans() }}
             </div>
         </div>
 
         <div class="mt-6 space-y-4">
             @foreach($thread->posts as $post)
                 <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-800/50 p-5">
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="text-sm">
-                            <a href="{{ route('users.show', $post->user) }}" class="font-semibold text-slate-800 dark:text-slate-100 hover:underline">
-                                {{ $post->user->username ?? $post->user->name }}
-                            </a>
-                            <span class="text-slate-500 dark:text-slate-400">·</span>
-                            <span class="text-slate-500 dark:text-slate-400">{{ $post->created_at->diffForHumans() }}</span>
-                        </div>
-
-                        @auth
-                            @if(auth()->user()->is_admin)
-                                <form method="POST" action="{{ route('forum.posts.destroy', $post) }}"
-                                      onsubmit="return confirm('Delete this post?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-sm text-red-600 hover:underline">
-                                        Delete
-                                    </button>
-                                </form>
-                            @endif
-                        @endauth
+                    <div class="text-sm">
+                        <a href="{{ route('users.show', $post->user) }}" class="font-semibold text-slate-800 dark:text-slate-100 hover:underline">
+                            {{ $post->user->username ?? $post->user->name }}
+                        </a>
+                        <span class="text-slate-500 dark:text-slate-400">·</span>
+                        <span class="text-slate-500 dark:text-slate-400">{{ $post->created_at->diffForHumans() }}</span>
                     </div>
-
                     <p class="mt-2 text-slate-700 dark:text-slate-200 whitespace-pre-line">{{ $post->body }}</p>
                 </div>
             @endforeach
@@ -86,5 +53,27 @@
         </div>
     </div>
 </x-app-layout>
+<?php
 
-{{-- NOTE: Keep this view file Blade-only. Migrations belong in database/migrations. --}}
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::create('forum_threads', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('title');
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('forum_threads');
+    }
+};
+
+
