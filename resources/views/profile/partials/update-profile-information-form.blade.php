@@ -19,6 +19,41 @@
         </div>
 
         <div>
+            <x-input-label for="username" :value="__('Username')" />
+            <x-text-input id="username" name="username" type="text" class="mt-1 block w-full" :value="old('username', $user->username)" autocomplete="username" />
+            <x-input-error class="mt-2" :messages="$errors->get('username')" />
+        </div>
+
+        <div>
+            <x-input-label for="birthday" :value="__('Birthday')" />
+            <x-text-input id="birthday" name="birthday" type="date" class="mt-1 block w-full" :value="old('birthday', optional($user->birthday)->format('Y-m-d'))" />
+            <x-input-error class="mt-2" :messages="$errors->get('birthday')" />
+        </div>
+
+        <div>
+            <x-input-label for="about" :value="__('About')" />
+            <textarea id="about" name="about" class="mt-1 block w-full rounded-md border-gray-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" rows="4">{{ old('about', $user->about) }}</textarea>
+            <x-input-error class="mt-2" :messages="$errors->get('about')" />
+        </div>
+
+        <div>
+            <x-input-label for="avatar" :value="__('Profile photo')" />
+            <input id="avatar" name="avatar" type="file" accept="image/*" class="mt-1 block w-full" />
+            <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+
+            @if($user->avatar_path)
+                <p class="mt-2 text-sm text-gray-600 dark:text-slate-300">
+                    {{ __('Current photo:') }}
+                </p>
+                <img
+                    src="{{ asset('storage/' . $user->avatar_path) }}"
+                    alt="{{ $user->name }}"
+                    class="mt-2 h-16 w-16 rounded-full object-cover"
+                />
+            @endif
+        </div>
+
+        <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
